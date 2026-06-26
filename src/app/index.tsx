@@ -3,7 +3,7 @@ import { BackHandler, StatusBar, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 // 1. Import your hollow UI bricks
-import { CallScreen } from "../components/CallScreen";
+import CallScreen from "../components/CallScreen";
 import { TimerMenu } from "../components/TimerMenu";
 
 // 2. Import your Back Room logic
