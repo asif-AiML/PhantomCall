@@ -9,31 +9,30 @@ let timerId: ReturnType<typeof setTimeout> | null = null;
  * @param delaySeconds How long to wait before ringing
  * @param triggerRingUI A callback function the Engine shouts to the HomeScreen
  */
+// Add ringtoneUri as the third parameter
 export const startFakeCallTimer = (
   delaySeconds: number,
   triggerRingUI: () => void,
+  ringtoneUri: string | null,
 ) => {
-  // Safety check: Cancel any existing timers before starting a new one
   if (timerId) clearTimeout(timerId);
 
-  // The main setTimeout loop (JavaScript's built-in countdown tool)
   timerId = setTimeout(() => {
     try {
-      // 1. Pull the fire alarm! Tell the HomeScreen to change its sticky note.
       triggerRingUI();
 
-      // 2. Load the mp3 file directly from your assets folder using the modern engine
-      playerObject = createAudioPlayer(require("../../assets/ringtone.mp3"));
+      // The Engine Logic: Use custom URI if it exists, otherwise use the baked-in asset
+      const audioSource = ringtoneUri
+        ? ringtoneUri
+        : require("../../assets/ringtone.mp3");
 
-      // 3. Keep ringing infinitely until the user interacts
+      playerObject = createAudioPlayer(audioSource);
       playerObject.loop = true;
-
-      // 4. Hit Play (Notice we don't need 'await' anymore, it is synchronous!)
       playerObject.play();
     } catch (error) {
       console.error("Error playing ringtone:", error);
     }
-  }, delaySeconds * 1000); // Math: setTimeout reads in milliseconds (1000ms = 1s)
+  }, delaySeconds * 1000);
 };
 
 /**

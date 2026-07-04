@@ -16,13 +16,19 @@ type AppStage = "SETUP" | "WAITING" | "RINGING" | "ONGOING" | "SETTINGS";
 
 export default function Index() {
   const [appStage, setAppStage] = useState<AppStage>("SETUP");
+  const [ringtoneUri, setRingtoneUri] = useState<string | null>(null);
+  const [ringtoneName, setRingtoneName] = useState<string>("Default Ringtone");
 
   // Triggered by TimerMenu
   const handleStartTimer = (seconds: number) => {
     setAppStage("WAITING");
-    startFakeCallTimer(seconds, () => {
-      setAppStage("RINGING");
-    });
+    startFakeCallTimer(
+      seconds,
+      () => {
+        setAppStage("RINGING");
+      },
+      ringtoneUri,
+    ); // Pass the URI to the engine
   };
 
   // Triggered by the Red Button (Decline on CallScreen OR End on OngoingCall)
@@ -65,7 +71,14 @@ export default function Index() {
 
       {/* STAGE 5: The Settings Menu */}
       {appStage === "SETTINGS" && (
-        <Settings onClose={() => setAppStage("SETUP")} />
+        <Settings
+          onClose={() => setAppStage("SETUP")}
+          currentRingtoneName={ringtoneName}
+          onSelectRingtone={(uri, name) => {
+            setRingtoneUri(uri);
+            setRingtoneName(name);
+          }}
+        />
       )}
     </SafeAreaView>
   );
