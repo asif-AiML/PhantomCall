@@ -1,24 +1,59 @@
 import MaterialIcons from "@react-native-vector-icons/material-icons";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { useEffect, useState } from "react";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 
 // 1. The Nervous System
 interface OngoingCallProps {
   onEndCall: () => void;
+  callerImageUri: string | null;
 }
 
-export default function OngoingCall({ onEndCall }: OngoingCallProps) {
+export default function OngoingCall({
+  onEndCall,
+  callerImageUri,
+}: OngoingCallProps) {
+  // --- The Brain: Active Timer Logic ---
+  const [seconds, setSeconds] = useState(0);
+
+  useEffect(() => {
+    // Start the ticking heartbeat
+    const interval = setInterval(() => {
+      setSeconds((prev) => prev + 1);
+    }, 1000);
+
+    // CRITICAL: Kill the interval when the screen closes so it doesn't leak memory
+    return () => clearInterval(interval);
+  }, []);
+
+  // Helper function to format the raw seconds into MM:SS
+  const formatTime = (totalSeconds: number) => {
+    const mins = Math.floor(totalSeconds / 60);
+    const secs = totalSeconds % 60;
+    return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
+  };
+
   return (
     <View style={styles.container}>
       {/* TOP SECTION: Timer & Info */}
+      {/* TOP SECTION: Timer & Info */}
       <View style={styles.topSection}>
-        <Text style={styles.timerText}>00:01</Text>
+        <Text style={styles.timerText}>{formatTime(seconds)}</Text>
         <Text style={styles.callerName}>Bro Azam - Family</Text>
         <Text style={styles.networkText}>Zong</Text>
       </View>
 
       {/* MIDDLE SECTION: Large Avatar */}
-      <View style={styles.imageFrame}>
-        <MaterialIcons name="person" size={60} color="#9aa0a6" />
+      <View style={styles.avatarSection}>
+        <View style={styles.largeImageFrame}>
+          {callerImageUri ? (
+            <Image
+              source={{ uri: callerImageUri }}
+              style={styles.largeProfileImage}
+            />
+          ) : (
+            <MaterialIcons name="person" size={100} color="#9aa0a6" />
+          )}
+        </View>
       </View>
 
       {/* BOTTOM SECTION: Control Panel */}
@@ -180,5 +215,25 @@ const styles = StyleSheet.create({
     transform: [{ scale: 0.92 }],
     opacity: 0.85,
     elevation: 1,
+  },
+  // --- Middle Section ---
+  avatarSection: {
+    alignItems: "center",
+    justifyContent: "center",
+    flex: 1,
+  },
+  largeImageFrame: {
+    width: 180,
+    height: 180,
+    borderRadius: 90, // Exactly half of 180 for a perfect circle
+    backgroundColor: "#d8e2e8", // Native light gray fallback frame
+    justifyContent: "center",
+    alignItems: "center",
+    elevation: 2,
+  },
+  largeProfileImage: {
+    width: 180,
+    height: 180,
+    borderRadius: 90,
   },
 });

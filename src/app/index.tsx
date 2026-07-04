@@ -18,6 +18,7 @@ export default function Index() {
   const [appStage, setAppStage] = useState<AppStage>("SETUP");
   const [ringtoneUri, setRingtoneUri] = useState<string | null>(null);
   const [ringtoneName, setRingtoneName] = useState<string>("Default Ringtone");
+  const [callerImageUri, setCallerImageUri] = useState<string | null>(null);
 
   // Triggered by TimerMenu
   const handleStartTimer = (seconds: number) => {
@@ -63,11 +64,20 @@ export default function Index() {
 
       {/* STAGE 3: The Fake Call (Ringing) */}
       {appStage === "RINGING" && (
-        <CallScreen onEndCall={handleEndCall} onAnswerCall={handleAnswerCall} />
+        <CallScreen
+          onEndCall={handleEndCall}
+          onAnswerCall={handleAnswerCall}
+          callerImageUri={callerImageUri}
+        />
       )}
 
       {/* STAGE 4: The Active Call (Talking) */}
-      {appStage === "ONGOING" && <OngoingCall onEndCall={handleEndCall} />}
+      {appStage === "ONGOING" && (
+        <OngoingCall
+          onEndCall={handleEndCall}
+          callerImageUri={callerImageUri}
+        />
+      )}
 
       {/* STAGE 5: The Settings Menu */}
       {appStage === "SETTINGS" && (
@@ -78,6 +88,8 @@ export default function Index() {
             setRingtoneUri(uri);
             setRingtoneName(name);
           }}
+          currentImageUri={callerImageUri}
+          onSelectImage={(uri) => setCallerImageUri(uri)}
         />
       )}
     </SafeAreaView>

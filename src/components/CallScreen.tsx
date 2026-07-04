@@ -1,16 +1,18 @@
 import MaterialIcons from "@react-native-vector-icons/material-icons";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 
 // 1. Define the "Nervous System" - what commands can this screen accept?
 interface CallScreenProps {
   onEndCall: () => void;
   onAnswerCall?: () => void; // The '?' makes it optional for now while we build
+  callerImageUri: string | null;
 }
 
 // 2. Inject the props into the component function
 export default function CallScreen({
   onEndCall,
   onAnswerCall,
+  callerImageUri,
 }: CallScreenProps) {
   return (
     <View style={styles.container}>
@@ -18,7 +20,14 @@ export default function CallScreen({
       <View style={styles.callerIdSection}>
         <Text style={styles.networkText}>Call via Zong from</Text>
         <View style={styles.imageFrame}>
-          <MaterialIcons name="person" size={60} color="#9aa0a6" />
+          {callerImageUri ? (
+            <Image
+              source={{ uri: callerImageUri }}
+              style={styles.profileImage}
+            />
+          ) : (
+            <MaterialIcons name="person" size={60} color="#9aa0a6" />
+          )}
         </View>
         <Text style={styles.callerName}>Bro Azam - Family</Text>
         <Text style={styles.mobileNumber}>Mobile 0314 4898000</Text>
@@ -167,5 +176,10 @@ const styles = StyleSheet.create({
     transform: [{ scale: 0.92 }], // Shrinks the button by 8% to feel pushed in
     opacity: 0.85, // Dims the color slightly
     elevation: 1, // Flattens the drop shadow
+  },
+  profileImage: {
+    width: 140,
+    height: 140,
+    borderRadius: 70, // Must match the frame's math perfectly
   },
 });
