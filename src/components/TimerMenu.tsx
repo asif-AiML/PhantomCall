@@ -1,10 +1,12 @@
+import MaterialIcons from "@react-native-vector-icons/material-icons";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
 interface TimerMenuProps {
   onSelectTimer: (seconds: number) => void;
+  onOpenSettings: () => void;
 }
 
-export function TimerMenu({ onSelectTimer }: TimerMenuProps) {
+export function TimerMenu({ onSelectTimer, onOpenSettings }: TimerMenuProps) {
   // A clean array of options so we don't have to copy/paste buttons
   const timeOptions = [
     { label: "10 Seconds", value: 10 },
@@ -15,6 +17,11 @@ export function TimerMenu({ onSelectTimer }: TimerMenuProps) {
 
   return (
     <View style={styles.container}>
+      {/* Settings Gear */}
+      <Pressable style={styles.settingsGear} onPress={onOpenSettings}>
+        <MaterialIcons name="settings" size={32} color="#9aa0a6" />
+      </Pressable>
+
       <Text style={styles.header}>SELECT ESCAPE TIMER</Text>
       <Text style={styles.subtitle}>App will go dark. Wait for the ring.</Text>
 
@@ -73,5 +80,12 @@ const styles = StyleSheet.create({
     color: "#FFF",
     fontSize: 18,
     fontWeight: "bold",
+  },
+  settingsGear: {
+    position: "absolute",
+    top: -150,
+    left: 20,
+    padding: 10,
+    zIndex: 10, // This ensures it stays on top and doesn't get covered by other UI
   },
 });

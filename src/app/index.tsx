@@ -5,13 +5,14 @@ import { SafeAreaView } from "react-native-safe-area-context";
 // Components
 import CallScreen from "../components/CallScreen";
 import OngoingCall from "../components/OngoingCall";
+import Settings from "../components/Settings";
 import { TimerMenu } from "../components/TimerMenu";
 
 // Engine
 import { startFakeCallTimer, stopFakeCall } from "../utils/fakeCallEngine";
 
 // 1. Expand the brain to include Stage 4
-type AppStage = "SETUP" | "WAITING" | "RINGING" | "ONGOING";
+type AppStage = "SETUP" | "WAITING" | "RINGING" | "ONGOING" | "SETTINGS";
 
 export default function Index() {
   const [appStage, setAppStage] = useState<AppStage>("SETUP");
@@ -44,7 +45,10 @@ export default function Index() {
       {/* STAGE 1: The Setup Menu */}
       {appStage === "SETUP" && (
         <View style={styles.menuContainer}>
-          <TimerMenu onSelectTimer={handleStartTimer} />
+          <TimerMenu
+            onSelectTimer={handleStartTimer}
+            onOpenSettings={() => setAppStage("SETTINGS")}
+          />
         </View>
       )}
 
@@ -58,6 +62,11 @@ export default function Index() {
 
       {/* STAGE 4: The Active Call (Talking) */}
       {appStage === "ONGOING" && <OngoingCall onEndCall={handleEndCall} />}
+
+      {/* STAGE 5: The Settings Menu */}
+      {appStage === "SETTINGS" && (
+        <Settings onClose={() => setAppStage("SETUP")} />
+      )}
     </SafeAreaView>
   );
 }
