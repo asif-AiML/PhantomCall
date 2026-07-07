@@ -3,6 +3,7 @@ import { BackHandler, StatusBar, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 // Components
+import FadeInView from "@/components/FadeInView";
 import About from "../components/About";
 import CallScreen from "../components/CallScreen";
 import OngoingCall from "../components/OngoingCall";
@@ -60,12 +61,14 @@ export default function Index() {
 
       {/* STAGE 1: The Setup Menu */}
       {appStage === "SETUP" && (
-        <View style={styles.menuContainer}>
-          <TimerMenu
-            onSelectTimer={handleStartTimer}
-            onOpenSettings={() => setAppStage("SETTINGS")}
-          />
-        </View>
+        <FadeInView key="setup-stage">
+          <View style={styles.menuContainer}>
+            <TimerMenu
+              onSelectTimer={handleStartTimer}
+              onOpenSettings={() => setAppStage("SETTINGS")}
+            />
+          </View>
+        </FadeInView>
       )}
 
       {/* STAGE 2: The Waiting Room (Pure Pitch Black Screen) */}
@@ -73,46 +76,54 @@ export default function Index() {
 
       {/* STAGE 3: The Fake Call (Ringing) */}
       {appStage === "RINGING" && (
-        <CallScreen
-          onEndCall={handleEndCall}
-          onAnswerCall={handleAnswerCall}
-          callerImageUri={callerImageUri}
-          callerName={callerName}
-          phoneNumber={phoneNumber}
-        />
+        <FadeInView key="ringing-stage">
+          <CallScreen
+            onEndCall={handleEndCall}
+            onAnswerCall={handleAnswerCall}
+            callerImageUri={callerImageUri}
+            callerName={callerName}
+            phoneNumber={phoneNumber}
+          />
+        </FadeInView>
       )}
 
       {/* STAGE 4: The Active Call (Talking) */}
       {appStage === "ONGOING" && (
-        <OngoingCall
-          onEndCall={handleEndCall}
-          callerImageUri={callerImageUri}
-          callerName={callerName}
-          
-        />
+        <FadeInView key="ongoing-stage">
+          <OngoingCall
+            onEndCall={handleEndCall}
+            callerImageUri={callerImageUri}
+            callerName={callerName}
+
+          />
+        </FadeInView>
       )}
 
       {/* STAGE 5: The Settings Menu */}
       {appStage === "SETTINGS" && (
-        <Settings
-          onClose={() => setAppStage("SETUP")}
-          currentRingtoneName={ringtoneName}
-          onSelectRingtone={(uri, name) => {
-            setRingtoneUri(uri);
-            setRingtoneName(name);
-          }}
-          currentImageUri={callerImageUri}
-          onSelectImage={(uri) => setCallerImageUri(uri)}
-          currentCallerName={callerName}
-          onChangeName={(name) => setCallerName(name)}
-          onOpenAbout={() => setAppStage("ABOUT")}
-          currentPhoneNumber={phoneNumber} // Placeholder for the current phone number
-          onChangePhoneNumber={(number) => setPhoneNumber(number)}
-        />
+        <FadeInView key="settings-stage">
+          <Settings
+            onClose={() => setAppStage("SETUP")}
+            currentRingtoneName={ringtoneName}
+            onSelectRingtone={(uri, name) => {
+              setRingtoneUri(uri);
+              setRingtoneName(name);
+            }}
+            currentImageUri={callerImageUri}
+            onSelectImage={(uri) => setCallerImageUri(uri)}
+            currentCallerName={callerName}
+            onChangeName={(name) => setCallerName(name)}
+            onOpenAbout={() => setAppStage("ABOUT")}
+            currentPhoneNumber={phoneNumber} // Placeholder for the current phone number
+            onChangePhoneNumber={(number) => setPhoneNumber(number)}
+          />
+        </FadeInView>
       )}
 
       {appStage === "ABOUT" && (
-        <About onClose={() => setAppStage("SETTINGS")} />
+        <FadeInView key="about-stage">
+          <About onClose={() => setAppStage("SETTINGS")} />
+        </FadeInView>
       )}
     </SafeAreaView>
   );
