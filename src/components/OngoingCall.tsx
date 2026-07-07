@@ -6,11 +6,17 @@ import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 interface OngoingCallProps {
   onEndCall: () => void;
   callerImageUri: string | null;
+  callerName: string;
+  
 }
 
 export default function OngoingCall({
   onEndCall,
   callerImageUri,
+  callerName,
+  
+ 
+
 }: OngoingCallProps) {
   // --- The Brain: Active Timer Logic ---
   const [seconds, setSeconds] = useState(0);
@@ -38,8 +44,9 @@ export default function OngoingCall({
       {/* TOP SECTION: Timer & Info */}
       <View style={styles.topSection}>
         <Text style={styles.timerText}>{formatTime(seconds)}</Text>
-        <Text style={styles.callerName}>Bro Azam - Family</Text>
+        <Text style={styles.callerName}>{callerName}</Text>
         <Text style={styles.networkText}>Zong</Text>
+        
       </View>
 
       {/* MIDDLE SECTION: Large Avatar */}

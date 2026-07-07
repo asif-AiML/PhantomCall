@@ -6,6 +6,8 @@ interface CallScreenProps {
   onEndCall: () => void;
   onAnswerCall?: () => void; // The '?' makes it optional for now while we build
   callerImageUri: string | null;
+  callerName: string;
+  phoneNumber: string;
 }
 
 // 2. Inject the props into the component function
@@ -13,7 +15,18 @@ export default function CallScreen({
   onEndCall,
   onAnswerCall,
   callerImageUri,
+  callerName,
+  phoneNumber,
 }: CallScreenProps) {
+  // --- Formatter Engine ---
+  const formatPhoneNumber = (num: string) => {
+    const cleaned = num.replace(/\s/g, ''); // Wipe any existing spaces
+    if (cleaned.length > 4) {
+      return `${cleaned.slice(0, 4)} ${cleaned.slice(4)}`; // Inject space after 4th char
+    }
+    return cleaned;
+  };
+
   return (
     <View style={styles.container}>
       {/* TOP SECTION: Caller ID & Image */}
@@ -29,8 +42,8 @@ export default function CallScreen({
             <MaterialIcons name="person" size={60} color="#9aa0a6" />
           )}
         </View>
-        <Text style={styles.callerName}>Bro Azam - Family</Text>
-        <Text style={styles.mobileNumber}>Mobile 0314 4898000</Text>
+        <Text style={styles.callerName}>{callerName}</Text>
+        <Text style={styles.mobileNumber}>Mobile {formatPhoneNumber(phoneNumber)}</Text>
       </View>
 
       {/* MIDDLE SECTION: Message Pill */}

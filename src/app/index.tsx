@@ -3,6 +3,7 @@ import { BackHandler, StatusBar, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 // Components
+import About from "../components/About";
 import CallScreen from "../components/CallScreen";
 import OngoingCall from "../components/OngoingCall";
 import Settings from "../components/Settings";
@@ -12,13 +13,21 @@ import { TimerMenu } from "../components/TimerMenu";
 import { startFakeCallTimer, stopFakeCall } from "../utils/fakeCallEngine";
 
 // 1. Expand the brain to include Stage 4
-type AppStage = "SETUP" | "WAITING" | "RINGING" | "ONGOING" | "SETTINGS";
+type AppStage =
+  | "SETUP"
+  | "WAITING"
+  | "RINGING"
+  | "ONGOING"
+  | "SETTINGS"
+  | "ABOUT";
 
 export default function Index() {
   const [appStage, setAppStage] = useState<AppStage>("SETUP");
   const [ringtoneUri, setRingtoneUri] = useState<string | null>(null);
   const [ringtoneName, setRingtoneName] = useState<string>("Default Ringtone");
   const [callerImageUri, setCallerImageUri] = useState<string | null>(null);
+  const [callerName, setCallerName] = useState<string>("UNKNOWN CALLER");
+  const [phoneNumber, setPhoneNumber] = useState<string>("03XX XXXXXXX"); // Placeholder
 
   // Triggered by TimerMenu
   const handleStartTimer = (seconds: number) => {
@@ -68,6 +77,8 @@ export default function Index() {
           onEndCall={handleEndCall}
           onAnswerCall={handleAnswerCall}
           callerImageUri={callerImageUri}
+          callerName={callerName}
+          phoneNumber={phoneNumber}
         />
       )}
 
@@ -76,6 +87,8 @@ export default function Index() {
         <OngoingCall
           onEndCall={handleEndCall}
           callerImageUri={callerImageUri}
+          callerName={callerName}
+          
         />
       )}
 
@@ -90,7 +103,16 @@ export default function Index() {
           }}
           currentImageUri={callerImageUri}
           onSelectImage={(uri) => setCallerImageUri(uri)}
+          currentCallerName={callerName}
+          onChangeName={(name) => setCallerName(name)}
+          onOpenAbout={() => setAppStage("ABOUT")}
+          currentPhoneNumber={phoneNumber} // Placeholder for the current phone number
+          onChangePhoneNumber={(number) => setPhoneNumber(number)}
         />
+      )}
+
+      {appStage === "ABOUT" && (
+        <About onClose={() => setAppStage("SETTINGS")} />
       )}
     </SafeAreaView>
   );
