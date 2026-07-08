@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BackHandler, StatusBar, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 // Components
 import FadeInView from "@/components/FadeInView";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import About from "../components/About";
 import CallScreen from "../components/CallScreen";
+import Onboarding from "../components/Onboarding";
 import OngoingCall from "../components/OngoingCall";
 import Settings from "../components/Settings";
 import { TimerMenu } from "../components/TimerMenu";
@@ -15,6 +17,8 @@ import { startFakeCallTimer, stopFakeCall } from "../utils/fakeCallEngine";
 
 // 1. Expand the brain to include Stage 4
 type AppStage =
+  | "LOADING"
+  | "ONBOARDING"
   | "SETUP"
   | "WAITING"
   | "RINGING"
@@ -23,7 +27,24 @@ type AppStage =
   | "ABOUT";
 
 export default function Index() {
-  const [appStage, setAppStage] = useState<AppStage>("SETUP");
+  const [appStage, setAppStage] = useState<AppStage>("LOADING");
+
+  useEffect(() => {
+    const checkFirstLaunch = async () => {
+      try {
+        const hasLaunched = await AsyncStorage.getItem('@has_launched_v2');
+        if (hasLaunched === 'true') {
+          setAppStage("SETUP");
+        } else {
+          setAppStage("ONBOARDING");
+        }
+      } catch (error) {
+        setAppStage("SETUP"); // Failsafe
+      }
+    };
+    checkFirstLaunch();
+  }, []);
+
   const [ringtoneUri, setRingtoneUri] = useState<string | null>(null);
   const [ringtoneName, setRingtoneName] = useState<string>("Default Ringtone");
   const [callerImageUri, setCallerImageUri] = useState<string | null>(null);
@@ -58,6 +79,14 @@ export default function Index() {
     <SafeAreaView style={styles.container}>
       {/* Hide the phone clock/battery during WAITING, RINGING, and ONGOING for maximum immersion */}
       <StatusBar hidden={appStage !== "SETUP"} />
+      
+      {appStage === "LOADING" && (
+        <View style={{ flex: 1, backgroundColor: '#121212' }} />
+      )}
+
+      {appStage === "ONBOARDING" && (
+        <Onboarding onFinish={() => setAppStage("SETUP")} />
+      )}
 
       {/* STAGE 1: The Setup Menu */}
       {appStage === "SETUP" && (

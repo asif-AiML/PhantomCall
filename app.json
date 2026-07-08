@@ -2,7 +2,7 @@
   "expo": {
     "name": "PhantomCall",
     "slug": "PhantomCall",
-    "version": "1.0.0",
+    "version": "2.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "phantomcall",
@@ -14,12 +14,16 @@
       "softwareKeyboardLayoutMode": "resize",
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
-        "foregroundImage": "./assets/images/android-icon-foreground.png",
-        "backgroundImage": "./assets/images/android-icon-background.png",
-        "monochromeImage": "./assets/images/android-icon-monochrome.png"
+        "foregroundImage": "./assets/images/android-icon-foreground.png"
       },
       "predictiveBackGestureEnabled": false,
-      "package": "com.rn_asif.PhantomCall"
+      "package": "com.rn_asif.PhantomCall",
+      "permissions": [
+        "android.permission.RECORD_AUDIO",
+        "android.permission.MODIFY_AUDIO_SETTINGS",
+        "android.permission.FOREGROUND_SERVICE",
+        "android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK"
+      ]
     },
     "web": {
       "output": "static",
@@ -46,7 +50,7 @@
     "extra": {
       "router": {},
       "eas": {
-        "projectId": "89f071f6-7eda-4dc2-aca5-746346b9faf2"
+        "projectId": "f2465980-8178-4403-b82e-861f9c0384f2"
       }
     }
   }

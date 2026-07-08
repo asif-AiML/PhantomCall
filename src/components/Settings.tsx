@@ -209,7 +209,7 @@ const styles = StyleSheet.create({
     paddingTop: 60,
     paddingHorizontal: 20,
     paddingBottom: 20,
-    backgroundColor: "#1e1e1e",
+    backgroundColor: "#121212", //chnage
     elevation: 4,
   },
   backButton: {
