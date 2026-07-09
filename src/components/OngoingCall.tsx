@@ -2,7 +2,7 @@ import MaterialIcons from "@react-native-vector-icons/material-icons";
 import { useEffect, useState } from "react";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 
-// 1. The Nervous System
+// 1. Define the "Nervous System" - what commands can this screen accept?
 interface OngoingCallProps {
   onEndCall: () => void;
   callerImageUri: string | null;
@@ -40,7 +40,7 @@ export default function OngoingCall({
 
   return (
     <View style={styles.container}>
-      {/* TOP SECTION: Timer & Info */}
+      
       {/* TOP SECTION: Timer & Info */}
       <View style={styles.topSection}>
         <Text style={styles.timerText}>{formatTime(seconds)}</Text>

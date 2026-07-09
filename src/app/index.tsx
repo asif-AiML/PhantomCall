@@ -15,7 +15,7 @@ import { TimerMenu } from "../components/TimerMenu";
 // Engine
 import { startFakeCallTimer, stopFakeCall } from "../utils/fakeCallEngine";
 
-// 1. Expand the brain to include Stage 4
+// App Stages
 type AppStage =
   | "LOADING"
   | "ONBOARDING"
@@ -39,7 +39,7 @@ export default function Index() {
           setAppStage("ONBOARDING");
         }
       } catch (error) {
-        setAppStage("SETUP"); // Failsafe
+        setAppStage("SETUP"); 
       }
     };
     checkFirstLaunch();

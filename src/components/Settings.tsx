@@ -13,7 +13,7 @@ import {
   View
 } from "react-native";
 
-// Update the nervous system to accept the new state from index.tsx
+// Props for the Settings component
 interface SettingsProps {
   onClose: () => void;
   currentRingtoneName: string;
@@ -143,7 +143,7 @@ export default function Settings({
           </Pressable>
         </View>
 
-        {/* CALLER NAME ROW */}
+        
         {/* CUSTOM NAME ROW */}
         <View style={styles.settingRow}>
           <View style={styles.settingTextContainer}>

@@ -7,7 +7,7 @@ interface TimerMenuProps {
 }
 
 export function TimerMenu({ onSelectTimer, onOpenSettings }: TimerMenuProps) {
-  // A clean array of options so we don't have to copy/paste buttons
+  // Define the timer options with their corresponding seconds
   const timeOptions = [
     { label: "10 Seconds", value: 10 },
     { label: "30 Seconds", value: 30 },

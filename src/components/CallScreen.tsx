@@ -54,7 +54,7 @@ export default function CallScreen({
         </Pressable>
       </View>
 
-      {/* BOTTOM SECTION: The Two-Button Action Layout */}
+      
       {/* BOTTOM SECTION: The Two-Button Action Layout */}
       <View style={styles.actionButtonsContainer}>
         {/* Decline Button */}
@@ -92,7 +92,7 @@ export default function CallScreen({
   );
 }
 
-// ... Keep your existing StyleSheet.create(...) exactly the same below this line
+
 
 const styles = StyleSheet.create({
   container: {
