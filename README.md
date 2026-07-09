@@ -14,9 +14,11 @@ Unlike other utilities, PhantomCall is designed with absolute privacy in mind: z
 
 ## 📸 Screenshots
 
-| Setup Screen | Settings | Simulated Call |
-| :---: | :---: | :---: |
-| [Screenshot 1] | [Screenshot 2] | [Screenshot 3] |
+| Setup Screen | Settings | Simulated Call | Ongoing Call
+| :---: | :---: | :---: | :---: |
+| <img width="1080" height="2400" alt="Screenshot_2026-07-09-09-13-31-93_60576406707bce8bc05507a580b3c2ae" src="https://github.com/user-attachments/assets/5f2c0154-51fa-40d8-ae6c-f6defcd57b0a" /> | <img width="1080" height="2400" alt="Screenshot_2026-07-09-09-13-40-92_60576406707bce8bc05507a580b3c2ae" src="https://github.com/user-attachments/assets/971dea45-9098-4338-9133-d798a33395f2" /> | <img width="1080" height="2400" alt="Screenshot_2026-07-09-09-15-32-99_60576406707bce8bc05507a580b3c2ae" src="https://github.com/user-attachments/assets/42a9dcb6-a6fd-4808-a74d-fd4218510c11" /> | <img width="1080" height="2400" alt="Screenshot_2026-07-09-09-15-49-80_60576406707bce8bc05507a580b3c2ae" src="https://github.com/user-attachments/assets/6d282a42-56cc-46c8-bf3b-ad77293c30e8" />|
+
+
 
 ## 🛠 Tech Stack
 
